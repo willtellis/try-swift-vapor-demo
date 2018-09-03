@@ -24,3 +24,11 @@ extension Todo {
         return Outgoing.init(id: id, title: title, completed: completed, order: order, url: url)
     }
 }
+
+extension Future where T == Todo {
+    func makeOutgoing(with req: Request) -> Future<Todo.Outgoing> {
+        return map { todo in
+            return try todo.makeOutgoing(with: req)
+        }
+    }
+}
